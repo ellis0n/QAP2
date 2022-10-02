@@ -1,8 +1,9 @@
 const fs = require("fs");
 const EventEmitter = require("events");
+const logEvents = require("./logEvents");
+
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
-const logEvents = require("./logEvents");
 
 myEmitter.addListener("route", (event, level, msg) => {
   const date = new Date();
