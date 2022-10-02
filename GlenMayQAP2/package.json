@@ -1,0 +1,26 @@
+{
+  "name": "glenmayqap2",
+  "version": "1.0.0",
+  "description": "Glen's QAP 2 - A multi-route http server that handles events, reading files as well as writing them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ellis0n/QAP2.git"
+  },
+  "keywords": [
+    "nodejs",
+    "eventEmitter",
+    "http",
+    "fs",
+    "server"
+  ],
+  "author": "Glen May",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ellis0n/QAP2/issues"
+  },
+  "homepage": "https://github.com/ellis0n/QAP2#readme"
+}

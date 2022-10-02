@@ -4,7 +4,6 @@ const routes = require("./routes.js");
 const server = http.createServer((req, res) => {
   let path = "./views/";
   console.log(req.url, req.method);
-  console.log(req);
   switch (req.url) {
     case "/":
       path += "index.html";

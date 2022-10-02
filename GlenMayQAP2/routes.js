@@ -4,28 +4,28 @@ class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
 // load the logEvents module
-const logEvents = require("./logEvents");
+// const logEvents = require("./logEvents");
 
-myEmitter.addListener("route", (event, level, msg) => {
-  const d = new Date();
-  console.log(d.toLocaleString() + " * " + level.toUpperCase() + " * " + msg);
-  logEvents(event, level, msg);
-});
+// myEmitter.addListener("route", (event, level, msg) => {
+//   const d = new Date();
+//   console.log(d.toLocaleString() + " * " + level.toUpperCase() + " * " + msg);
+//   logEvents(event, level, msg);
+// });
 
 // this is the index page
-function indexPage(path, event, response) {
-  displayFile(path, response);
+function indexPage(path, event, res) {
+  displayFile(path, res);
   myEmitter.emit("route", event, "information", "the home page was visited.");
 }
 
 //this is the about page
-function aboutPage(path, event, response) {
-  displayFile(path, response);
+function aboutPage(path, event, res) {
+  displayFile(path, res);
   myEmitter.emit("route", event, "information", "the about page was visited.");
 }
 
-function contactPage(path, event, response) {
-  displayFile(path, response);
+function contactPage(path, event, res) {
+  displayFile(path, res);
   myEmitter.emit(
     "route",
     event,
@@ -34,8 +34,8 @@ function contactPage(path, event, response) {
   );
 }
 
-function subscribePage(path, event, response) {
-  displayFile(path, response);
+function subscribePage(path, event, res) {
+  displayFile(path, res);
   myEmitter.emit(
     "route",
     event,
@@ -44,8 +44,8 @@ function subscribePage(path, event, response) {
   );
 }
 
-function fourOfourPage(path, event, response) {
-  displayFile(path, response);
+function fourOfourPage(path, event, res) {
+  displayFile(path, res);
   myEmitter.emit(
     "route",
     event,
@@ -54,16 +54,16 @@ function fourOfourPage(path, event, response) {
   );
 }
 
-function displayFile(path, response) {
+function displayFile(path, res) {
   fs.readFile(path, function (err, data) {
     if (err) {
       console.log(err);
-      response.end();
+      res.end();
     } else {
       //console.log('file was served.')
-      response.writeHead(response.statusCode, { "Content-Type": "text/html" });
-      response.write(data);
-      response.end();
+      res.writeHead(res.statusCode, { "Content-Type": "text/html" });
+      res.write(data);
+      res.end();
     }
   });
 }
