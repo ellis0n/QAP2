@@ -2,46 +2,40 @@ const fs = require("fs");
 const EventEmitter = require("events");
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
+const logEvents = require("./logEvents");
 
-// load the logEvents module
-// const logEvents = require("./logEvents");
-
-// myEmitter.addListener("route", (event, level, msg) => {
-//   const d = new Date();
-//   console.log(d.toLocaleString() + " * " + level.toUpperCase() + " * " + msg);
-//   logEvents(event, level, msg);
-// });
+myEmitter.addListener("route", (event, level, msg) => {
+  const date = new Date();
+  console.log(
+    date.toLocaleString() + " * " + level.toUpperCase() + " * " + msg
+  );
+  logEvents(event, level, msg);
+});
 
 // this is the index page
 function indexPage(path, event, res) {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "the home page was visited.");
+  myEmitter.emit("route", event, "information", "Home page visited.");
 }
 
-//this is the about page
+function dailyPage(path, event, res) {
+  displayFile(path, res);
+  myEmitter.emit("route", event, "information", "Daily page visited.");
+}
+
 function aboutPage(path, event, res) {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "the about page was visited.");
+  myEmitter.emit("route", event, "information", "About page visited.");
 }
 
 function contactPage(path, event, res) {
   displayFile(path, res);
-  myEmitter.emit(
-    "route",
-    event,
-    "information",
-    "the contact page was visited."
-  );
+  myEmitter.emit("route", event, "information", "Contact page was visited.");
 }
 
 function subscribePage(path, event, res) {
   displayFile(path, res);
-  myEmitter.emit(
-    "route",
-    event,
-    "information",
-    "the subscribe page was visited."
-  );
+  myEmitter.emit("route", event, "information", "Subscribe page visited.");
 }
 
 function fourOfourPage(path, event, res) {
@@ -50,7 +44,7 @@ function fourOfourPage(path, event, res) {
     "route",
     event,
     "error",
-    "a routing error occured for the " + event + " route."
+    "A routing error occured for the " + event + " route."
   );
 }
 
@@ -60,7 +54,6 @@ function displayFile(path, res) {
       console.log(err);
       res.end();
     } else {
-      //console.log('file was served.')
       res.writeHead(res.statusCode, { "Content-Type": "text/html" });
       res.write(data);
       res.end();
@@ -74,4 +67,5 @@ module.exports = {
   contactPage,
   subscribePage,
   fourOfourPage,
+  dailyPage,
 };

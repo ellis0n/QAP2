@@ -6,9 +6,15 @@ const server = http.createServer((req, res) => {
   console.log(req.url, req.method);
   switch (req.url) {
     case "/":
-      path += "index.html";
+      path += "homepage.html";
       res.statusCode = 200;
       routes.indexPage(path, req.url, res);
+
+      break;
+    case "/daily":
+      path += "daily.html";
+      res.statusCode = 200;
+      routes.contactPage(path, req.url, res);
       break;
     case "/about":
       path += "about.html";
@@ -26,11 +32,11 @@ const server = http.createServer((req, res) => {
       routes.subscribePage(path, req.url, res);
       break;
     case "/about-me":
-      // this is a redirect for a deprecated route
       res.statusCode = 301;
       res.setHeader("Location", "/about");
       res.end();
       break;
+
     default:
       path += "404.html";
       res.statusCode = 404;
