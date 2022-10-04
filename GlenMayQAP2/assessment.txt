@@ -1,0 +1,7 @@
+Assessment:
+
+1. I have spent roughly 7-10 hours.
+2. I have watched every video I could find on building a server without express, scoured tons of reddit posts and read a bunch of stackoverflow comments.
+3. Kara Balsom provided insight into the api integration
+4. No.
+5. I felt like the basic routing makes sense, and I understand how the events work in concept, but I didn't find myself well equipped to handlie the interplay between the two modules. Writing things to file, status codes and res.write() all are clearish to me now, and the broader point of using vanilla node to build a server is too, but I really struggled to handle the api integration and I feel like I still don't really have a strong grasp on much but the basics. Overall I would say this was a frustrating QAP to strive for "distinction" or full marks and I'm bound to watch more videos to try and make up for the obviously huge gap in my understanding.

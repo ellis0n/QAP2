@@ -1,7 +1,6 @@
 const fs = require("fs");
 const EventEmitter = require("events");
 const logEvents = require("./logEvents");
-
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
@@ -11,6 +10,8 @@ myEmitter.addListener("route", (url, event, msg, res) => {
     date.toLocaleString() +
       " * " +
       event.toUpperCase() +
+      " * " +
+      res.statusCode +
       " * ." +
       url +
       " * " +
@@ -19,48 +20,47 @@ myEmitter.addListener("route", (url, event, msg, res) => {
   logEvents(url, event.toUpperCase(), msg, res);
 });
 
-function indexPage(path, event, res) {
+const indexPage = (path, event, res) => {
   displayFile(path, res);
   myEmitter.emit("route", event, "information", "Home page visited.");
-}
+};
 
-function dailyPage(path, event, res) {
+const newsPage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "Daily page visited.");
-}
+  myEmitter.emit("route", event, "information", "News page visited.");
+};
 
-function aboutPage(path, event, res) {
+const aboutPage = (path, event, res) => {
   displayFile(path, res);
   myEmitter.emit("route", event, "information", "About page visited.");
-}
+};
 
-function contactPage(path, event, res) {
+const contactPage = (path, event, res) => {
   displayFile(path, res);
   myEmitter.emit("route", event, "information", "Contact page visited.");
-}
+};
 
-function subscribePage(path, event, res) {
+const subscribePage = (path, event, res) => {
   displayFile(path, res);
   myEmitter.emit("route", event, "information", "Subscribe page visited.");
-}
+};
 
-function fourOfourPage(path, event, res) {
+const fourOfourPage = (path, event, res) => {
   displayFile(path, res);
   myEmitter.emit("route", event, "error", "Page not found.");
-}
+};
 
-function displayFile(path, res) {
+const displayFile = (path, res) => {
   fs.readFile(path, function (err, data) {
     if (err) {
       console.log(err);
       res.end();
     } else {
       res.writeHead(res.statusCode, { "Content-Type": "text/html" });
-      res.write(data);
-      res.end();
+      res.end(data);
     }
   });
-}
+};
 
 module.exports = {
   indexPage,
@@ -68,5 +68,5 @@ module.exports = {
   contactPage,
   subscribePage,
   fourOfourPage,
-  dailyPage,
+  newsPage,
 };
