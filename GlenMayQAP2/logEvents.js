@@ -6,16 +6,15 @@ const fs = require("fs");
 const fsPromises = require("fs").promises;
 const path = require("path");
 
-const logEvents = async (event, level, message) => {
+const logEvents = async (status, event, message) => {
   const dateTime = `${format(new Date(), "yyyyMMdd\tHH:mm:ss")}`;
-  const logItem = `${dateTime}\t${level}\t${event}\t${message}\t${uuid()}`;
+  const logItem = `${uuid()}\t${dateTime}\t${status}\t${event}\t${message}\t`;
 
   try {
     if (!fs.existsSync(path.join(__dirname, "logs"))) {
       await fsPromises.mkdir(path.join(__dirname, "logs"));
     }
-    // Include todays date in filename
-    const fileName = `${format(new Date(), "yyyyMMdd")}` + "_httpevents.log";
+    const fileName = `${format(new Date(), "yyyyMMdd")}.log`;
     await fsPromises.appendFile(
       path.join(__dirname, "logs", fileName),
       logItem + "\n"

@@ -5,15 +5,12 @@ const logEvents = require("./logEvents");
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
-myEmitter.addListener("route", (event, level, msg) => {
+myEmitter.addListener("route", (url, event, msg) => {
   const date = new Date();
-  console.log(
-    date.toLocaleString() + " * " + level.toUpperCase() + " * " + msg
-  );
-  logEvents(event, level, msg);
+  console.log(date.toLocaleString() + " " + url + "/ " + msg);
+  logEvents(url, event, msg);
 });
 
-// this is the index page
 function indexPage(path, event, res) {
   displayFile(path, res);
   myEmitter.emit("route", event, "information", "Home page visited.");

@@ -9,7 +9,6 @@ const server = http.createServer((req, res) => {
       path += "homepage.html";
       res.statusCode = 200;
       routes.indexPage(path, req.url, res);
-
       break;
     case "/daily":
       path += "daily.html";
