@@ -5,10 +5,18 @@ const logEvents = require("./logEvents");
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
-myEmitter.addListener("route", (url, event, msg) => {
+myEmitter.addListener("route", (url, event, msg, res) => {
   const date = new Date();
-  console.log(date.toLocaleString() + " " + url + "/ " + msg);
-  logEvents(url, event, msg);
+  console.log(
+    date.toLocaleString() +
+      " * " +
+      event.toUpperCase() +
+      " * ." +
+      url +
+      " * " +
+      msg
+  );
+  logEvents(url, event.toUpperCase(), msg, res);
 });
 
 function indexPage(path, event, res) {
@@ -28,7 +36,7 @@ function aboutPage(path, event, res) {
 
 function contactPage(path, event, res) {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "Contact page was visited.");
+  myEmitter.emit("route", event, "information", "Contact page visited.");
 }
 
 function subscribePage(path, event, res) {
@@ -38,12 +46,7 @@ function subscribePage(path, event, res) {
 
 function fourOfourPage(path, event, res) {
   displayFile(path, res);
-  myEmitter.emit(
-    "route",
-    event,
-    "error",
-    "A routing error occured for the " + event + " route."
-  );
+  myEmitter.emit("route", event, "error", "Page not found.");
 }
 
 function displayFile(path, res) {
