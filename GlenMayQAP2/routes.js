@@ -1,53 +1,100 @@
+// Handles routing and logging on event emitters
+
 const fs = require("fs");
 const EventEmitter = require("events");
 const logEvents = require("./logEvents");
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 
-myEmitter.addListener("route", (url, event, msg, res) => {
+myEmitter.addListener("route", (url, event, msg, statusCode) => {
   const date = new Date();
   console.log(
     date.toLocaleString() +
       " * " +
       event.toUpperCase() +
       " * " +
-      res.statusCode +
+      statusCode +
       " * ." +
       url +
       " * " +
       msg
   );
-  logEvents(url, event.toUpperCase(), msg, res);
+  logEvents(url, event.toUpperCase(), msg, statusCode);
 });
 
 const indexPage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "Home page visited.");
+  myEmitter.emit(
+    "route",
+    event,
+    "information",
+    statusCode,
+    "Home page visited."
+  );
 };
 
 const newsPage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "News page visited.");
+  myEmitter.emit(
+    "route",
+    event,
+    "information",
+    statusCode,
+    "News page visited."
+  );
 };
 
 const aboutPage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "About page visited.");
+  myEmitter.emit(
+    "route",
+    event,
+    "information",
+    statusCode,
+    "About page visited."
+  );
 };
 
 const contactPage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "Contact page visited.");
+  myEmitter.emit(
+    "route",
+    event,
+    "information",
+    statusCode,
+    "Contact page visited."
+  );
 };
 
 const subscribePage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "information", "Subscribe page visited.");
+  myEmitter.emit(
+    "route",
+    event,
+    "information",
+    statusCode,
+    "Subscribe page visited."
+  );
+};
+
+const noContentPage = (path, event, res) => {
+  myEmitter.emit(
+    "route",
+    event,
+    "error",
+    statusCode,
+    "No content to deliver, request understood."
+  );
 };
 
 const fourOfourPage = (path, event, res) => {
   displayFile(path, res);
-  myEmitter.emit("route", event, "error", "Page not found.");
+  myEmitter.emit("route", event, "error", statusCode, "Page not found.");
+};
+
+const refusedPage = (path, event, res) => {
+  displayFile(path, res);
+  myEmitter.emit("route", event, "error", statusCode, "Access forbidden.");
 };
 
 const displayFile = (path, res) => {
@@ -69,4 +116,7 @@ module.exports = {
   subscribePage,
   fourOfourPage,
   newsPage,
+  refusedPage,
+  refusedPage,
+  noContentPage,
 };
